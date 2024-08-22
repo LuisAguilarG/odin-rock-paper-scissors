@@ -1,12 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="./js/main.js"></script>
-    <title>Rock, Paper, Scissors!</title>
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="icon" type="image/x-icon" href="./images/vs-icon.gif">
+  <script src="./js/main.js" defer></script>
+  <title>Rock, Paper, Scissors!</title>
+</head>
+
+<body>
+  <div class="global-container blur not-clickable"> <!-- blur -->
+    <div class="main-content">
+      <div class="instructions-container">
+        <p class="title">Rock, Paper, Scissors! <img class="icon" src="./images/vs-icon.gif" alt="" draggable="false"></p>
+        <p class="subtitle">The first player to score <span>5</span> points <span>wins</span></p>
+      </div>
+
+      <div class="game-container">
+        <div class="top">
+          <div class="turn-container">
+            <div class="turn-human hide">
+              <p class="title">YOUR TURN</p>
+            </div>
+      
+            <div class="turn-computer hide">
+              <p class="title">COMPUTER'S TURN</p>
+            </div>
+          </div>
+        </div>
+      
+        <div class="bottom">
+          <div class="choice-container">
+            <!-- <div class="user-selection-blink">
+              
+            </div> -->
+
+            <div class="human-title">YOU</div>
+            <div class="human">
+              <img class="crown hide" src="./images/icon-crown.svg" alt="">
+
+              <button class="rock not-clickable">
+                <div class="icon">
+                  <img class="rps" src="./images/icon-rock-white.svg" alt="" />
+                </div>
+              </button>
+      
+              <button class="paper not-clickable">
+                <div class="icon">
+                  <img class="rps" src="./images/icon-paper-white.svg" alt="" />
+                </div>
+              </button>
+      
+              <button class="scissors not-clickable">
+                <div class="icon">
+                  <img class="rps" src="./images/icon-scissors-white.svg" alt="" />
+                </div>
+              </button>
+            </div>
+      
+            <div class="vs">
+              <img class="tie hide" src="./images/icon-tie.svg" alt="">
+              <div class="icon">VS</div>
+              <p class="round-container">Round 1</p>
+            </div>
+      
+            <div class="computer">
+              <img class="crown hide" src="./images/icon-crown.svg" alt="">
+
+              <button class="rock not-clickable">
+                <div class="icon">
+                  <!-- <img class="rps" src="./images/icon-rock-white.svg" alt="" /> -->
+                  <img id="computer-rock-image" class="question" src="./images/icon-question-white-2.svg" alt="">
+                </div>
+              </button>
+      
+              <button class="paper not-clickable">
+                <div class="icon">
+                  <!-- <img class="rps" src="./images/icon-paper-white.svg" alt="" /> -->
+                  <img id="computer-paper-image" class="question" src="./images/icon-question-white-2.svg" alt="">
+                </div>
+              </button>
+      
+              <button class="scissors not-clickable">
+                <div class="icon">
+                  <!-- <img class="rps" src="./images/icon-scissors-white.svg" alt="" /> -->
+                  <img id="computer-scissors-image" class="question" src="./images/icon-question-white-2.svg" alt="">
+                </div>
+              </button>
+            </div>
+      
+            <div class="computer-title">COMPUTER</div>
+          </div>
+        </div>
+      </div>
     
-  </body>
+      <div class="score-container">
+        <div class="title-container">
+          <p class="title">SCORE</p>
+        </div>
+  
+        <div class="human">
+          <p class="subtitle">YOU</p>
+          <p class="display">0</p>
+        </div>
+  
+        <div class="status">
+          <p class="subtitle">STATUS</p>
+          <p class="result waiting">Waiting...</p>
+        </div>
+  
+        <div class="computer">
+          <p class="subtitle">COMPUTER</p>
+          <p class="display">0</p>
+        </div>
+      </div>
+    </div>
+  
+    <footer>
+      <a class="link" href="https://github.com/LuisAguilarG" target="_blank">Created by Luis</a>
+      |
+      <a class="link" href="https://freemusicarchive.org/music/cxr-atk" target="_blank">Music by CXR ATK</a>
+      
+      <a class="link" href="https://pixabay.com/sound-effects/" target="_blank">Sounds by Pixabay</a>
+      |
+      <a class="link" href="https://www.freepik.com/" target="_blank">Icons by Freepik</a>
+    </footer>
+  </div>
+  
+  <div class="end-modal-container disabled">
+    <h1 class="title">You have lost</h1>
+    <div class="score">
+      <div class="human">YOU <span>0</span></div>
+      <div class="computer">COMPUTER <span>5</span></div>
+    </div>
+    <button class="reset">TRY AGAIN <span class="material-symbols-outlined">touch_app</span></button>
+    <img src="./images/end-modal-icon.gif" alt="">
+  </div>
+
+  <div class="play-container">
+    <button class="play-button">PLAY<span class="material-symbols-outlined">touch_app</span></button>
+  </div>
+
+  <audio id="game-music" src="./sounds/music/CXR ATK - Factory - loop.mp3" loop></audio>
+  <audio id="play-fx" src="./sounds/effects/play-fx.mp3"></audio>
+  <audio id="selection-fx" src="./sounds/effects/selection-fx.mp3"></audio>
+  <audio id="winner-fx" src="./sounds/effects/winner-fx.mp3"></audio>
+  <audio id="loser-fx" src="./sounds/effects/loser-fx.mp3"></audio>
+  <audio id="tie-fx" src="./sounds/effects/tie-fx.mp3"></audio>  
+</body>
+
 </html>
