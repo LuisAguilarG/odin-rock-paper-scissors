@@ -1,7 +1,6 @@
 /* User Interface */
-const modalButton = document.querySelector(".end-modal-container button");
-const turnHuman = document.querySelector(".turn-human");
-const turnComputer = document.querySelector(".turn-computer");
+const turnNotificationHuman = document.querySelector(".turn-notification-human");
+const turnNotificationComputer = document.querySelector(".turn-notification-computer");
 const crownHuman = document.querySelector(".human .crown");
 const crownComputer = document.querySelector(".computer .crown");
 const tie = document.querySelector(".vs .tie");
@@ -9,7 +8,11 @@ const optionHumanButtons = document.querySelectorAll(".choice-container .human b
 const optionComputerButtons = document.querySelectorAll(".choice-container .computer button");
 const globalContainer = document.querySelector(".global-container");
 const playButton = document.querySelector(".play-button");
-const statusResult = document.querySelector(".score-container .result");
+const newGameButton = document.querySelector(".new-game-button");
+const finalResult = document.querySelector(".final-result");
+const finalScoreHuman = document.querySelector(".final-score .human");
+const finalScoreComputer = document.querySelector(".final-score .computer");
+const statusRoundResult = document.querySelector(".score-container .round-result");
 const gameMusic = document.querySelector("#game-music");
 const playFx = document.querySelector("#play-fx");
 const selectionFx = document.querySelector("#selection-fx");
@@ -18,229 +21,15 @@ const loserFx = document.querySelector("#loser-fx");
 const tieFx = document.querySelector("#tie-fx");
 
 
-/* Game mechanics */
-const options = ["rock", "paper", "scissors"];
-let humanScore;
-let computerScore;
-let currentRound = 1;
-
-
-try {
-  setEventListeners();
-  setinitialConfiguration();
-} catch (error) {
-  console.error(error);
-}
-
-function resetGame() {
-  humanScore = 0;
-  computerScore = 0;
-  currentRound = 1;
-}
-
-function playGame() {
-  /* playRound(); */
-
-  
-  /*
-  while (currentRound <= 5) {
-    playRound(getHumanChoice(), getComputerChoice());
-  }
-
-  console.log("Your score: " + humanScore);
-  console.log("Computer score: " + computerScore);
-
-  if (humanScore > computerScore) {
-    console.log("%c *** Congratulations, you have won! ***", "color: green;");
-  } else {
-    console.log(
-      "%c °°° Computer has won. Try again by reloading the page. °°°",
-      "color: red;"
-    );
-  }
-    */
-}
-
-
-function getHumanChoice(selectedOption) {
-
-  for (let i = 0; i < options.length; i++) {
-    if (selectedOption.classList.contains(options[i])) {
-      return options[i];
-    }
-  }
-}
-
-function getComputerChoice() {
-  const option = options[Math.floor(Math.random() * 3)];
-  return option;
-}
-
-
-
-/*
-function getHumanChoice() {
-  let option = null;
-  let isValidOption = null;
-
-  while (!isValidOption) {
-    option = prompt(
-      "ROUND " + currentRound + ". Type your option (Rock, Paper or Scissors): "
-    ).toLowerCase();
-
-    switch (option) {
-      case "rock":
-      case "paper":
-      case "scissors":
-        isValidOption = true;
-        break;
-      default:
-        isValidOption = false;
-        break;
-    }
-  }
-  return option;
-}
-*/
-
-function playRound(playerChoice, computerChoice) {
-  let result = "";
-
-  if (playerChoice === computerChoice) {
-    result = "TIE";
-    toggleVisibility(tie);
-  } else {
-    if (
-      (playerChoice === "rock" && computerChoice === "scissors") ||
-      (playerChoice === "paper" && computerChoice === "rock") ||
-      (playerChoice === "scissors" && computerChoice === "paper")
-    ) {
-      result = "WINNER";
-      toggleVisibility(crownHuman);
-      humanScore++;
-    } else {
-      result = "LOSER";
-      setTimeout(() => {
-        toggleVisibility(crownComputer);
-      }, 1000);
-      computerScore++;
-    }
-    currentRound++;
-  }
-
-  if (humanScore === 5 || computerScore === 5) {
-    enableEndModal();
-  } 
-
-  toggleVisibility(turnHuman);
-  toggleVisibility(turnComputer);
-  toggleActionOptionButtons();
-
-  setTimeout(() => {
-    changeImageComputerChoice(computerChoice);
-    toggleRemainingOptions(computerChoice, optionComputerButtons);
-    setTimeout(() => {
-      playResultSound(result);
-    }, 1000);
-    updateStatus(result);
-    updateScore();
-  }, 1000);
-
-  setTimeout(() => {
-    restoreAllCrownIcons();
-    restoreTieIcons();
-    toggleVisibility(turnComputer);
-
-    setTimeout(() => {
-      prepareNextRound();
-      restoreImageComputerChoice(computerChoice);
-      restoreStatus();
-      updateRound();
-    }, 1000);
-  }, 4500);
-
-}
-
-
-function updateLog(logMessage, resultRound) {
-  const logDiv = document.querySelector(".log");
-  const logParagraph = document.createElement("p");
-  const roundSpan = document.createElement("span");
-  
-  logDiv.appendChild(logParagraph);
-  logParagraph.classList.add(resultRound);
-  logParagraph.textContent = logMessage;
-  logParagraph.appendChild(roundSpan);
-  roundSpan.textContent = ` Current round: ${currentRound}`;
-}
-
-function switchButtons() {
-  const optionHumanButtons = document.querySelectorAll(".options button");
-
-  optionHumanButtons.forEach((option) => {
-    option.disabled = option.disabled ? false : true;
-  });
-}
-/* 
-function switchModal() {
-  const modalDiv = document.querySelector(".modal");
-
-  modalDiv.classList.contains("disabled") 
-  ? modalDiv.classList.replace("disabled", "active") 
-  : modalDiv.classList.replace("active", "disabled");
-}
- */
-function resetLog() {
-  const logDiv = document.querySelector(".log");
-
-  while (logDiv.firstChild) {
-    logDiv.removeChild(logDiv.lastChild);
-  }
-}
-
-function resetScore() {
-  humanScore = 0;
-  computerScore = 0;
-  currentRound = 1;
-}
-
-
-function playResultSound(result) {
-  if (result === "WINNER") {
-    winnerFx.play();
-  } else if (result === "LOSER") {
-    loserFx.play();
-  } else {
-    tieFx.play();
-  }
-}
-
-
-/* 
-function resetGame() {
-  resetScores();
-  resetLog();
-  switchButtons();
-  switchModal();
-}
- */
-
-
-/* -------------------------------------- */
-/* UX / UI */
 function setEventListeners() {
+
   optionHumanButtons.forEach((selectedOption) => {
     selectedOption.addEventListener("click", () => {
       selectionFx.play();
-
-      toggleRemainingOptions(getHumanChoice(selectedOption), optionHumanButtons); /* toggleRemainingOptions(selectedOption, optionHumanButtons); */
+      toggleRemainingOptions(getHumanChoice(selectedOption), optionHumanButtons); 
       playRound(getHumanChoice(selectedOption), getComputerChoice());
     });
   });
-
-
-  
-  modalButton.addEventListener("click", () => resetGame());
 
   playButton.addEventListener("click", () => {
     gameMusic.play();
@@ -253,8 +42,8 @@ function setEventListeners() {
     }, 1000);
   });
 
-  document.querySelector(".choice-container .computer .rock").addEventListener("click", function() {
-    this.classList.add("hide");
+  newGameButton.addEventListener("click", () => {
+    location.reload(true);
   });
 
   document.addEventListener("contextmenu", event => event.preventDefault());
@@ -268,8 +57,44 @@ function setinitialConfiguration() {
   winnerFx.volume = .9;
   tieFx.volume = .6;
   loserFx.volume = .4;
+}
 
-  /* toggleActionOptionButtons(); */
+
+function renderRound(computerChoice, roundResult) {
+  toggleVisibility(turnNotificationHuman);
+  toggleVisibility(turnNotificationComputer);
+  toggleActionOptionButtons();
+
+  setTimeout(() => {
+    changeImageComputerChoice(computerChoice);
+    toggleRemainingOptions(computerChoice, optionComputerButtons);
+    setTimeout(() => {
+      playRoundResultSound(roundResult);
+    }, 1000);
+    updateStatus(roundResult);
+    updateScore();
+  }, 1000);
+
+  setTimeout(() => {
+    restoreAllCrownIcons();
+    restoreTieIcons();
+    toggleVisibility(turnNotificationComputer);
+
+    setTimeout(() => {
+      prepareNextRound();
+      restoreImageComputerChoice(computerChoice);
+      restoreStatus();
+      updateRound();
+    }, 1000);
+  }, 4500);
+}
+
+
+function prepareNextRound() {
+
+  restoreAllOptionIcons();
+  toggleVisibility(turnNotificationHuman);
+  toggleActionOptionButtons();  
 }
 
 
@@ -286,14 +111,6 @@ function removePlayButton() {
 
 
 function toggleRemainingOptions(selectedOption, optionButtons) {
-  /* 
-  optionButtons.forEach((option) => {
-    option.classList.toggle("selection");
-
-    if (!option.isSameNode(selectedOption)) {
-      option.classList.toggle("hide");
-    }
-  }); */
 
   optionButtons.forEach((option) => {
     option.classList.toggle("selection");
@@ -306,6 +123,7 @@ function toggleRemainingOptions(selectedOption, optionButtons) {
 
 
 function restoreAllOptionIcons() {
+
   optionHumanButtons.forEach((option) => {
     option.classList.remove("selection");
     option.classList.remove("hide");
@@ -322,9 +140,7 @@ function restoreAllCrownIcons() {
   crowns = document.querySelectorAll(".crown");
 
   crowns.forEach((crown) => {
-    if (!crown.classList.contains("hide")) {
-      crown.classList.add("hide");
-    }
+    crown.classList.add("hide");
   });
 }
 
@@ -336,39 +152,18 @@ function restoreTieIcons() {
 
 function changeImageComputerChoice(computerChoice) {
   const image = document.querySelector(`#computer-${computerChoice}-image`);
-  image.src = `./images/icon-${computerChoice}-white.svg`;
-
-/* 
-  optionComputerButtons.forEach((option) => {
-    if (!option.classList.contains(computerChoice)) {
-      option.src = "./images/icon-"+ computerChoice +"-white.svg";
-      option.setAttribute("src", "./images/icon-"+ computerChoice +"-white.svg");
-      console.log("./images/icon-"+ computerChoice +"-white.svg");
-    }
-  });
-   */
+  image.src = `./images/white-${computerChoice}-icon.svg`;
 }
+
 
 function restoreImageComputerChoice(computerChoice) {
   const image = document.querySelector(`#computer-${computerChoice}-image`);
-  image.src = `./images/icon-question-white-2.svg`;
-}
-
-
-function restoreStatus() {
-  statusResult.textContent = "Waiting...";
-}
-
-
-function prepareNextRound() {
-  restoreAllOptionIcons();
-  /* restoreAllCrowns(); */
-  toggleVisibility(turnHuman);
-  toggleActionOptionButtons();  
+  image.src = `./images/white-question-icon-mirror.svg`;
 }
 
 
 function toggleActionOptionButtons() {
+
   optionHumanButtons.forEach((button) => {
     button.classList.toggle("not-clickable");
   });
@@ -379,13 +174,6 @@ function toggleVisibility(element) {
   element.classList.toggle("hide");
 }
 
-/* 
-function toggleHoverButton() {
-  optionHumanButtons.forEach((option) => {
-    option.classList.toggle("not-clickable");
-  });
-}
- */
 
 function updateRound() {
   const roundContainer = document.querySelector(".round-container");
@@ -394,8 +182,13 @@ function updateRound() {
 }
 
 
-function updateStatus(result) {
-  statusResult.textContent = result;
+function updateStatus(roundResult) {
+  statusRoundResult.textContent = roundResult;
+}
+
+
+function restoreStatus() {
+  statusRoundResult.textContent = "Waiting...";
 }
 
 
@@ -408,16 +201,117 @@ function updateScore() {
 }
 
 
-function enableEndModal() {
-  endModalContainer = document.querySelector(".end-modal-container");
+function renderNewGameModal() {
+  const newGameContainer = document.querySelector(".new-game-modal-container");
 
-  endModalContainer.classList.remove("disabled");
+  newGameContainer.classList.remove("hide");
+  newGameContainer.classList.remove("not-clickable");
   globalContainer.classList.add("blur");
   globalContainer.classList.add("not-clickable");
-  
-  setTimeout(() => {
-    
-  }, 1000);
 }
 
+
+/* ----------------------------- */
+
+/* Game Mechanics */
+const options = ["rock", "paper", "scissors"];
+let humanScore;
+let computerScore;
+let currentRound = 1;
+
+
+try {
+  setEventListeners();
+  setinitialConfiguration();
+} catch (error) {
+  console.error(error);
+}
+
+
+function resetGame() {
+  humanScore = 0;
+  computerScore = 0;
+  currentRound = 1;
+}
+
+
+function getHumanChoice(selectedOption) {
+
+  for (let i = 0; i < options.length; i++) {
+    if (selectedOption.classList.contains(options[i])) {
+      return options[i];
+    }
+  }
+}
+
+
+function getComputerChoice() {
+  const option = options[Math.floor(Math.random() * 3)];
+  return option;
+}
+
+
+function playRound(playerChoice, computerChoice) {
+  let roundResult = "";
+
+  if (playerChoice === computerChoice) {
+    roundResult = "TIE";
+    toggleVisibility(tie);
+  } else {
+    if (
+      (playerChoice === "rock" && computerChoice === "scissors") ||
+      (playerChoice === "paper" && computerChoice === "rock") ||
+      (playerChoice === "scissors" && computerChoice === "paper")
+    ) {
+      roundResult = "WINNER";
+      toggleVisibility(crownHuman);
+      humanScore++;
+    } else {
+      roundResult = "LOSER";
+      setTimeout(() => {
+        toggleVisibility(crownComputer);
+      }, 1000);
+      computerScore++;
+    }
+    currentRound++;
+  }
+
+  if (hasAnyoneWon()) {
+    if (humanScore > computerScore) {
+      finalResult.classList.add("winner");
+      finalResult.textContent = "You have won";
+      document.querySelector(".result-gif").src = "./images/winner.gif";
+    } else {
+      finalResult.classList.add("loser");
+      finalResult.textContent = "You have lost";
+      document.querySelector(".result-gif").src = "./images/loser.gif";
+    }
+
+    finalScoreHuman.innerHTML = `YOU <span>${humanScore}<\span>`;
+    finalScoreComputer.innerHTML =  `COMPUTER <span>${computerScore}<\span>`;
+
+    setTimeout(() => {
+      renderNewGameModal();
+    }, 2500);
+  } 
+
+  renderRound(computerChoice, roundResult);
+}
+
+
+function hasAnyoneWon() {
+  return humanScore === 5 || computerScore === 5;
+}
+
+
+function playRoundResultSound(roundResult) {
+
+  if (roundResult === "WINNER") {
+    winnerFx.play();
+  } else if (roundResult === "LOSER") {
+    loserFx.play();
+  } else {
+    tieFx.play();
+  }
+}
 

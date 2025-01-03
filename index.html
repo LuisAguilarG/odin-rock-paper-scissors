@@ -7,27 +7,27 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/style.css" />
-  <link rel="icon" type="image/x-icon" href="./images/vs-icon.gif">
+  <link rel="icon" type="image/x-icon" href="./images/flame-icon.gif">
   <script src="./js/main.js" defer></script>
   <title>Rock, Paper, Scissors!</title>
 </head>
 
 <body>
-  <div class="global-container blur not-clickable"> <!-- blur -->
+  <div class="global-container blur not-clickable">
     <div class="main-content">
       <div class="instructions-container">
-        <p class="title">Rock, Paper, Scissors! <img class="icon" src="./images/vs-icon.gif" alt="" draggable="false"></p>
+        <p class="title">Rock, Paper, Scissors! <img class="icon" src="./images/flame-icon.gif" alt=""></p>
         <p class="subtitle">The first player to score <span>5</span> points <span>wins</span></p>
       </div>
 
       <div class="game-container">
         <div class="top">
           <div class="turn-container">
-            <div class="turn-human hide">
+            <div class="turn-notification-human hide">
               <p class="title">YOUR TURN</p>
             </div>
       
-            <div class="turn-computer hide">
+            <div class="turn-notification-computer hide">
               <p class="title">COMPUTER'S TURN</p>
             </div>
           </div>
@@ -35,65 +35,58 @@
       
         <div class="bottom">
           <div class="choice-container">
-            <!-- <div class="user-selection-blink">
-              
-            </div> -->
-
-            <div class="human-title">YOU</div>
+            <div class="title-human">YOU</div>
             <div class="human">
-              <img class="crown hide" src="./images/icon-crown.svg" alt="">
+              <img class="crown hide" src="./images/crown-icon.svg" alt="">
 
               <button class="rock not-clickable">
                 <div class="icon">
-                  <img class="rps" src="./images/icon-rock-white.svg" alt="" />
+                  <img class="rps" src="./images/white-rock-icon.svg" alt="" />
                 </div>
               </button>
       
               <button class="paper not-clickable">
                 <div class="icon">
-                  <img class="rps" src="./images/icon-paper-white.svg" alt="" />
+                  <img class="rps" src="./images/white-paper-icon.svg" alt="" />
                 </div>
               </button>
       
               <button class="scissors not-clickable">
                 <div class="icon">
-                  <img class="rps" src="./images/icon-scissors-white.svg" alt="" />
+                  <img class="rps" src="./images/white-scissors-icon.svg" alt="" />
                 </div>
               </button>
             </div>
       
             <div class="vs">
-              <img class="tie hide" src="./images/icon-tie.svg" alt="">
+              <img class="tie hide" src="./images/tie-icon.svg" alt="">
               <div class="icon">VS</div>
               <p class="round-container">Round 1</p>
             </div>
       
             <div class="computer">
-              <img class="crown hide" src="./images/icon-crown.svg" alt="">
+              <img class="crown hide" src="./images/crown-icon.svg" alt="">
 
               <button class="rock not-clickable">
                 <div class="icon">
-                  <!-- <img class="rps" src="./images/icon-rock-white.svg" alt="" /> -->
-                  <img id="computer-rock-image" class="question" src="./images/icon-question-white-2.svg" alt="">
+                  <img id="computer-rock-image" class="question" src="./images/white-question-icon-mirror.svg" alt="">
                 </div>
               </button>
       
               <button class="paper not-clickable">
                 <div class="icon">
-                  <!-- <img class="rps" src="./images/icon-paper-white.svg" alt="" /> -->
-                  <img id="computer-paper-image" class="question" src="./images/icon-question-white-2.svg" alt="">
+                  <img id="computer-paper-image" class="question" src="./images/white-question-icon-mirror.svg" alt="">
                 </div>
               </button>
       
               <button class="scissors not-clickable">
                 <div class="icon">
-                  <!-- <img class="rps" src="./images/icon-scissors-white.svg" alt="" /> -->
-                  <img id="computer-scissors-image" class="question" src="./images/icon-question-white-2.svg" alt="">
+                  <img id="computer-scissors-image" class="question" src="./images/white-question-icon-mirror.svg" alt="">
                 </div>
               </button>
             </div>
       
-            <div class="computer-title">COMPUTER</div>
+            <div class="title-computer">COMPUTER</div>
           </div>
         </div>
       </div>
@@ -110,7 +103,7 @@
   
         <div class="status">
           <p class="subtitle">STATUS</p>
-          <p class="result waiting">Waiting...</p>
+          <p class="round-result">Waiting...</p>
         </div>
   
         <div class="computer">
@@ -131,14 +124,14 @@
     </footer>
   </div>
   
-  <div class="end-modal-container disabled">
-    <h1 class="title">You have lost</h1>
-    <div class="score">
-      <div class="human">YOU <span>0</span></div>
-      <div class="computer">COMPUTER <span>5</span></div>
-    </div>
-    <button class="reset">TRY AGAIN <span class="material-symbols-outlined">touch_app</span></button>
-    <img src="./images/end-modal-icon.gif" alt="">
+  <div class="new-game-modal-container hide not-clickable">
+    <button class="new-game-button">PLAY AGAIN <span class="material-symbols-outlined">touch_app</span></button>
+    <img class="result-gif" src="./images/winner.gif" alt="">
+    <div class="final-score">
+      <div class="human"></div>
+      <div class="computer"></div>
+    </div>    
+    <h1 class="final-result">You have lost</h1>
   </div>
 
   <div class="play-container">
@@ -152,5 +145,4 @@
   <audio id="loser-fx" src="./sounds/effects/loser-fx.mp3"></audio>
   <audio id="tie-fx" src="./sounds/effects/tie-fx.mp3"></audio>  
 </body>
-
 </html>
