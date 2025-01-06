@@ -280,11 +280,9 @@ function playRound(playerChoice, computerChoice) {
     if (humanScore > computerScore) {
       finalResult.classList.add("winner");
       finalResult.textContent = "You have won";
-      document.querySelector(".result-gif").src = "./images/winner.gif";
     } else {
       finalResult.classList.add("loser");
       finalResult.textContent = "You have lost";
-      document.querySelector(".result-gif").src = "./images/loser.gif";
     }
 
     finalScoreHuman.innerHTML = `YOU <span>${humanScore}<\span>`;
