@@ -1,5 +1,5 @@
 # The Odin Project | Project: Rock Paper Scissors
-[![App Screenshot](https://raw.githubusercontent.com/LuisAguilarG/odin-rock-paper-scissors/refs/heads/main/images/general-mockup.png)](https://luisaguilarg.github.io/etch-a-sketch/)
+[![App Screenshot](https://raw.githubusercontent.com/LuisAguilarG/odin-rock-paper-scissors/refs/heads/main/images/general-mockup.png)](https://github.com/LuisAguilarG/odin-rock-paper-scissors/)
 
 ## Try the live preview
 ☑️ [DEMO: https://github.com/LuisAguilarG/odin-rock-paper-scissors](https://luisaguilarg.github.io/odin-rock-paper-scissors/)
